@@ -2,6 +2,7 @@ package com.wanted.wantedpreonboardingbackend.service;
 
 import com.wanted.wantedpreonboardingbackend.domain.common.CommonState;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescription;
+import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescriptionFilter;
 import com.wanted.wantedpreonboardingbackend.service.dto.JobDescriptionSimple;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.param.JobDescriptionCreateParam;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ class JobDescriptionServiceTest {
         assertThat(jobDescription.getStatus()).isEqualTo(CommonState.ACTIVE);
         assertThat(jobDescription.getStatus().getValue()).isEqualTo(CommonState.ACTIVE.getValue());
         assertThat(jobDescription.getStatus().getValue()).isEqualTo(1);
-        List<JobDescriptionSimple> results = provider.findAll();
+        List<JobDescriptionSimple> results = provider.findAll(new JobDescriptionFilter(null));
         assertThat(results.size()).isEqualTo(1);
     }
 }

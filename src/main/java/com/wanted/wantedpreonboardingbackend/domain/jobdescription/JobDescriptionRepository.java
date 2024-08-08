@@ -1,9 +1,10 @@
 package com.wanted.wantedpreonboardingbackend.domain.jobdescription;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
 
-public interface JobDescriptionRepository extends JpaRepository<JobDescription, Long> {
+public interface JobDescriptionRepository extends JpaRepository<JobDescription, Long>, JpaSpecificationExecutor<JobDescription> {
     List<JobDescription> findByCompanyId(Long companyId);
 }

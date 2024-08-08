@@ -19,7 +19,7 @@ public record JobDescriptionDetail(Long id,
                 jd.getReward(),
                 relatedJobDescriptions
                         .stream()
-                        .map(j -> new JobDescriptionSimple(j))
+                        .map(JobDescriptionSimple::new)
                         .toList(),
                 new CompanySimple(jd.getCompany())
         );

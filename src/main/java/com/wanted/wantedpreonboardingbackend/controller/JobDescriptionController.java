@@ -1,6 +1,7 @@
 package com.wanted.wantedpreonboardingbackend.controller;
 
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescription;
+import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescriptionFilter;
 import com.wanted.wantedpreonboardingbackend.service.dto.JobDescriptionDetail;
 import com.wanted.wantedpreonboardingbackend.service.dto.JobDescriptionSimple;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.param.JobDescriptionCreateParam;
@@ -13,6 +14,7 @@ import com.wanted.wantedpreonboardingbackend.service.UserApplyService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/jobdescriptions")
@@ -30,8 +32,8 @@ public class JobDescriptionController {
     }
 
     @GetMapping
-    public List<JobDescriptionSimple> findAll() {
-        return provider.findAll();
+    public List<JobDescriptionSimple> findAll(@RequestParam(required = false) String search) {
+        return provider.findAll(new JobDescriptionFilter(search));
     }
 
     @GetMapping("/{id}")
