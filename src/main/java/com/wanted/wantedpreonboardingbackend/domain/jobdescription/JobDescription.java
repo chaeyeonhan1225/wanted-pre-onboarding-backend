@@ -8,7 +8,6 @@ import com.wanted.wantedpreonboardingbackend.domain.jobdescription.param.JobDesc
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.param.JobDescriptionUpdateParam;
 import com.wanted.wantedpreonboardingbackend.infrastructure.CommonStateConverter;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;

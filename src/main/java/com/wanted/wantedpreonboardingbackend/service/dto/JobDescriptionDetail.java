@@ -1,4 +1,4 @@
-package com.wanted.wantedpreonboardingbackend.domain.jobdescription.dto;
+package com.wanted.wantedpreonboardingbackend.service.dto;
 
 import com.wanted.wantedpreonboardingbackend.domain.company.Company;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescription;
@@ -10,10 +10,7 @@ public record JobDescriptionDetail(Long id,
                                    String description,
                                    Long reward,
                                    List<JobDescriptionSimple> relatedJobDescriptions,
-                                   Company company) {
-    public JobDescriptionDetail {
-    }
-
+                                   CompanySimple company) {
     public JobDescriptionDetail(JobDescription jd, List<JobDescription> relatedJobDescriptions) {
         this(
                 jd.getId(),
@@ -24,7 +21,7 @@ public record JobDescriptionDetail(Long id,
                         .stream()
                         .map(j -> new JobDescriptionSimple(j))
                         .toList(),
-                jd.getCompany()
+                new CompanySimple(jd.getCompany())
         );
     }
 }

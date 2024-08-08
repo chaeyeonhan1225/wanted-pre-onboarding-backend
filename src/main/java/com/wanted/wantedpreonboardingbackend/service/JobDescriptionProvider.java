@@ -2,8 +2,8 @@ package com.wanted.wantedpreonboardingbackend.service;
 
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescription;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescriptionRepository;
-import com.wanted.wantedpreonboardingbackend.domain.jobdescription.dto.JobDescriptionDetail;
-import com.wanted.wantedpreonboardingbackend.domain.jobdescription.dto.JobDescriptionSimple;
+import com.wanted.wantedpreonboardingbackend.service.dto.JobDescriptionDetail;
+import com.wanted.wantedpreonboardingbackend.service.dto.JobDescriptionSimple;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Getter
 @Embeddable
-class Location implements Serializable {
+public class Location implements Serializable {
     String country;
     String region;
 }

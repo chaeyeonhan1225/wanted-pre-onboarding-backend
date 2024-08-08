@@ -2,7 +2,7 @@ package com.wanted.wantedpreonboardingbackend.service;
 
 import com.wanted.wantedpreonboardingbackend.domain.common.CommonState;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescription;
-import com.wanted.wantedpreonboardingbackend.domain.jobdescription.dto.JobDescriptionSimple;
+import com.wanted.wantedpreonboardingbackend.service.dto.JobDescriptionSimple;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.param.JobDescriptionCreateParam;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

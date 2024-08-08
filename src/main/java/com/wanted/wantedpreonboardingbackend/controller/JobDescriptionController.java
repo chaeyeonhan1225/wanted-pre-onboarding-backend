@@ -1,8 +1,8 @@
 package com.wanted.wantedpreonboardingbackend.controller;
 
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescription;
-import com.wanted.wantedpreonboardingbackend.domain.jobdescription.dto.JobDescriptionDetail;
-import com.wanted.wantedpreonboardingbackend.domain.jobdescription.dto.JobDescriptionSimple;
+import com.wanted.wantedpreonboardingbackend.service.dto.JobDescriptionDetail;
+import com.wanted.wantedpreonboardingbackend.service.dto.JobDescriptionSimple;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.param.JobDescriptionCreateParam;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.param.JobDescriptionUpdateParam;
 import com.wanted.wantedpreonboardingbackend.domain.user.UserApply;
