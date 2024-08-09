@@ -3,12 +3,14 @@ package com.wanted.wantedpreonboardingbackend.service;
 import com.wanted.wantedpreonboardingbackend.domain.company.Company;
 import com.wanted.wantedpreonboardingbackend.domain.company.CompanyRepository;
 import com.wanted.wantedpreonboardingbackend.domain.exceptions.CompanyNotFoundException;
+import com.wanted.wantedpreonboardingbackend.domain.exceptions.InvalidInputException;
 import com.wanted.wantedpreonboardingbackend.domain.exceptions.JobDescriptionNotFoundException;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescription;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.param.JobDescriptionCreateParam;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescriptionRepository;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.param.JobDescriptionUpdateParam;
 import com.wanted.wantedpreonboardingbackend.service.dto.JobDescriptionSimple;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,18 +27,26 @@ public class JobDescriptionService {
     }
 
     public JobDescriptionSimple create(JobDescriptionCreateParam param) {
-        Company company = companyRepository.findById(param.companyId())
-                .orElseThrow(() -> new CompanyNotFoundException(param.companyId()));
-        JobDescription jd = new JobDescription(param, company);
-        return new JobDescriptionSimple(repository.save(jd));
+        try {
+            Company company = companyRepository.findById(param.companyId())
+                    .orElseThrow(() -> new CompanyNotFoundException(param.companyId()));
+            JobDescription jd = new JobDescription(param, company);
+            return new JobDescriptionSimple(repository.save(jd));
+        } catch (ConstraintViolationException ce) {
+            throw new InvalidInputException(ce);
+        }
     }
 
     public JobDescriptionSimple update(Long id, JobDescriptionUpdateParam param) {
-        JobDescription jd = repository.findById(id)
-                .orElseThrow(() -> new JobDescriptionNotFoundException(id));
-        jd.update(param);
-        jd.getCompany();
-        return new JobDescriptionSimple(repository.save(jd));
+        try {
+            JobDescription jd = repository.findById(id)
+                    .orElseThrow(() -> new JobDescriptionNotFoundException(id));
+            jd.update(param);
+            jd.getCompany();
+            return new JobDescriptionSimple(repository.save(jd));
+        } catch (ConstraintViolationException ce) {
+            throw new InvalidInputException(ce);
+        }
     }
 
     public Long delete(Long id) {

@@ -26,11 +26,11 @@ public class UserApply extends EntityBase implements Serializable {
     UUID uuid;
 
     @JsonIgnore
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     User user;
 
-    @ManyToOne(targetEntity = JobDescription.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = JobDescription.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "jobDescriptionId")
     JobDescription jobDescription;
 

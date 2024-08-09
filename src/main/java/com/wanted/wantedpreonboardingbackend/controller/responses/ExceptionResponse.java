@@ -2,6 +2,7 @@ package com.wanted.wantedpreonboardingbackend.controller.responses;
 
 import com.wanted.wantedpreonboardingbackend.domain.exceptions.DomainException;
 import com.wanted.wantedpreonboardingbackend.domain.exceptions.ExceptionCode;
+import com.wanted.wantedpreonboardingbackend.domain.exceptions.InvalidInputException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.AccessLevel;
@@ -31,28 +32,18 @@ public class ExceptionResponse {
         this.target = target;
     }
 
-    public static ExceptionResponse of(DomainException exception) {
-        return new ExceptionResponse(exception.getCode().getCode(), exception.getMessage());
+    // FieldError는 따로 처리
+    public static List<ExceptionResponse> ofList(InvalidInputException exception) {
+        System.out.println("exception = " + exception.getFieldErrors());
+        return Collections.singletonList(new ExceptionResponse(exception.getCode().getCode(),
+                exception.getMessage()));
     }
+
 
     public static List<ExceptionResponse> ofList(DomainException exception) {
         return Collections.singletonList(new ExceptionResponse(exception.getCode().getCode(), exception.getMessage()));
     }
 
-    public static ExceptionResponse of(ConstraintViolationException e) {
-        return new ExceptionResponse(ExceptionCode.BAD_REQUEST.getCode(), e.getMessage());
-    }
-
-    public static List<ExceptionResponse> ofList(ConstraintViolationException exception) {
-
-        List<ConstraintViolation<?>> constraintViolations = exception.getConstraintViolations().stream().toList();
-
-        return constraintViolations.stream().map(v -> new ExceptionResponse(ExceptionCode.BAD_REQUEST.getCode(),
-                v.getMessage(),
-                StreamSupport.stream(v.getPropertyPath().spliterator(), false)
-                        .reduce((first, second) -> second)
-                        .get().toString())).toList();
-    }
 
     public static List<ExceptionResponse> ofList(RuntimeException exception) {
         return Collections.singletonList(new ExceptionResponse(ExceptionCode.INTERNAL_SERVER_ERROR.getCode(),

@@ -11,6 +11,7 @@ import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -36,5 +37,9 @@ public class User extends EntityBase {
         UserApply apply = new UserApply(this, jobDescription);
         applies.add(apply);
         return apply;
+    }
+
+    public Optional<UserApply> findApply(Long jobDescriptionId) {
+        return applies.stream().filter(apply -> apply.getJobDescription().getId() == jobDescriptionId).findFirst();
     }
 }

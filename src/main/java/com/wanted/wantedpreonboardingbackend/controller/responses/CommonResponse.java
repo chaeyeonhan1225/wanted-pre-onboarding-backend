@@ -23,19 +23,11 @@ public class CommonResponse<T>  {
         return new CommonResponse<>(data, message, Collections.emptyList());
     }
 
-    public static <T> CommonResponse<T> error(DomainException exception) {
-        return new CommonResponse(null, null, ExceptionResponse.ofList(exception));
-    }
-
-    public static <T> CommonResponse<T> error(ConstraintViolationException exception) {
-        return new CommonResponse(null, null, ExceptionResponse.ofList(exception));
-    }
-
-    public static <T> CommonResponse<T> error(RuntimeException exception) {
-        return new CommonResponse(null, null, ExceptionResponse.ofList(exception));
-    }
-
     public static <T> CommonResponse<T> error(Exception exception) {
+        return new CommonResponse(null, null, ExceptionResponse.ofList(exception));
+    }
+
+    public static <T> CommonResponse<T> error(DomainException exception) {
         return new CommonResponse(null, null, ExceptionResponse.ofList(exception));
     }
 }
