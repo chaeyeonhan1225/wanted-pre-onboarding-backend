@@ -8,7 +8,7 @@ spring:
     generate-ddl: true
     hibernate:
       dialect: org.hibernate.dialect.MySQLDialect
-      ddl-auto: create-drop
+      ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
@@ -17,7 +17,7 @@ spring:
     open-in-view: false
   sql:
     init:
-      mode: always
+      mode: never
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/WantedWork?serverTimezone=UTC&useCursors=false&sendStringParametersAsUnicode=false&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false

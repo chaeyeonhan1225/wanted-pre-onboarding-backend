@@ -16,10 +16,15 @@ public class JobDescriptionSpec {
                 builder.like(root.get("position"), "%" + searchKeyword + "%");
     }
 
-    // TODO: CompanyNameLike도 구현해야함
     public static Specification<JobDescription> bySearchTechSpecLike(String searchKeyword) {
         return (root, query, builder) ->
                 builder.like(root.get("techSpec"), "%" + searchKeyword + "%");
+    }
+
+    public static Specification<JobDescription> byCompanyNameLike(String searchKeyword) {
+        return ((root, query, criteriaBuilder) -> {
+            return criteriaBuilder.like(root.join("company").get("name"), "%" + searchKeyword + "%");
+        });
     }
 
     private Specification<JobDescription> base() {
@@ -33,8 +38,9 @@ public class JobDescriptionSpec {
         if (filter.search() != null) {
             Specification<JobDescription> bySerachPositionLike = JobDescriptionSpec.bySearchPositionLike(filter.search());
             Specification<JobDescription> bySearchTechSpecLike = JobDescriptionSpec.bySearchTechSpecLike(filter.search());
+            Specification<JobDescription> byCompanyNameLike = JobDescriptionSpec.byCompanyNameLike(filter.search());
 
-            spec = spec.and(bySerachPositionLike.or(bySearchTechSpecLike));
+            spec = spec.and(bySerachPositionLike.or(bySearchTechSpecLike).or(byCompanyNameLike));
         }
 
         return spec;

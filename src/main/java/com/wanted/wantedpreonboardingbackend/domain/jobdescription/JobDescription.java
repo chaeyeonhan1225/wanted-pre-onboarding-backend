@@ -12,6 +12,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.SQLRestriction;
 
 @Getter
@@ -40,7 +43,8 @@ public class JobDescription extends EntityBase {
     @Column(nullable = false)
     String techSpec;
 
-    @ManyToOne(targetEntity = Company.class, fetch = FetchType.EAGER, optional = false)
+    // N + 1 문제 발생
+    @ManyToOne(targetEntity = Company.class, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="companyId")
     Company company;
 
