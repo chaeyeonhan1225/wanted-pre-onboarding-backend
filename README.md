@@ -41,7 +41,7 @@
    ```http request
    GET /jobdescriptions?search={searchText} 
    ```
-   search는 optional입니다.
+   | search는 optional입니다. 회사명, 포지션명, 기술스택 LIKE 검색을 할 수 있습니다.
 5. 채용공고 상세 조회
    ```http request
    GET /jobdescriptions/{id} 

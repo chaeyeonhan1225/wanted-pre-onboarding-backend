@@ -23,13 +23,13 @@ public class User extends EntityBase {
     Long id;
 
     @Column(length = 512, unique = true)
-    String email = "";
+    String email;
 
     @Column(length = 20)
-    String nickname = "";
+    String nickname;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @BatchSize(size = 50)
     List<UserApply> applies = new ArrayList<>();
 
@@ -40,6 +40,9 @@ public class User extends EntityBase {
     }
 
     public Optional<UserApply> findApply(Long jobDescriptionId) {
-        return applies.stream().filter(apply -> apply.getJobDescription().getId() == jobDescriptionId).findFirst();
+        return applies.stream()
+                .filter(apply ->
+                        apply.getJobDescription().getId().equals(jobDescriptionId))
+                .findFirst();
     }
 }
