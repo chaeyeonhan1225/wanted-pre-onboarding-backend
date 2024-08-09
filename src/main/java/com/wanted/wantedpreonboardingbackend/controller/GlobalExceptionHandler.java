@@ -1,11 +1,13 @@
 package com.wanted.wantedpreonboardingbackend.controller;
 
+import com.wanted.wantedpreonboardingbackend.controller.responses.CommonResponse;
 import com.wanted.wantedpreonboardingbackend.domain.exceptions.DomainException;
 import com.wanted.wantedpreonboardingbackend.domain.exceptions.ExceptionCode;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -34,8 +36,16 @@ public class GlobalExceptionHandler {
                 .body(CommonResponse.error(exception));
     }
 
+    @ExceptionHandler(HttpClientErrorException.class)
+    protected ResponseEntity<CommonResponse> handleMethodNotAllowedException(HttpClientErrorException.MethodNotAllowed exception) {
+        return ResponseEntity.status(ExceptionCode.BAD_REQUEST.getValue())
+                .body(CommonResponse.error(exception));
+    }
+
+
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<CommonResponse> handleException(Exception exception) {
+        System.out.println("exception = " + exception);
         return ResponseEntity.status(ExceptionCode.INTERNAL_SERVER_ERROR.getValue())
                 .body(CommonResponse.error(exception));
     }

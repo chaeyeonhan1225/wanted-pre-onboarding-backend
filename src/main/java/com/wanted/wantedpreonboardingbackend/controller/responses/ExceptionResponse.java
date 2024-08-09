@@ -1,4 +1,4 @@
-package com.wanted.wantedpreonboardingbackend.controller;
+package com.wanted.wantedpreonboardingbackend.controller.responses;
 
 import com.wanted.wantedpreonboardingbackend.domain.exceptions.DomainException;
 import com.wanted.wantedpreonboardingbackend.domain.exceptions.ExceptionCode;

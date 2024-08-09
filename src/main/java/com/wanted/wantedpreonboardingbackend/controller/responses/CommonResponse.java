@@ -1,12 +1,10 @@
-package com.wanted.wantedpreonboardingbackend.controller;
+package com.wanted.wantedpreonboardingbackend.controller.responses;
 
 import com.wanted.wantedpreonboardingbackend.domain.exceptions.DomainException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
