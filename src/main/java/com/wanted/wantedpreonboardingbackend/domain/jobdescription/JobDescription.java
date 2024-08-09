@@ -10,15 +10,13 @@ import com.wanted.wantedpreonboardingbackend.infrastructure.CommonStateConverter
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.SQLRestriction;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="JobDescription")
 @Entity
 @SQLRestriction("status > 0")
@@ -43,7 +41,6 @@ public class JobDescription extends EntityBase {
     @Column(nullable = false)
     String techSpec;
 
-    // N + 1 문제 발생
     @ManyToOne(targetEntity = Company.class, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="companyId")
     Company company;

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wanted.wantedpreonboardingbackend.domain.common.EntityBase;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescription;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "`UserApply`",
         uniqueConstraints = {
         @UniqueConstraint(

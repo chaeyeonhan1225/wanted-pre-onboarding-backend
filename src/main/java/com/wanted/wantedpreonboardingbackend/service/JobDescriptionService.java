@@ -8,6 +8,7 @@ import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescriptio
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.param.JobDescriptionCreateParam;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescriptionRepository;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.param.JobDescriptionUpdateParam;
+import com.wanted.wantedpreonboardingbackend.service.dto.JobDescriptionSimple;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,26 +24,26 @@ public class JobDescriptionService {
         this.companyRepository = companyRepository;
     }
 
-    public JobDescription create(JobDescriptionCreateParam param) {
+    public JobDescriptionSimple create(JobDescriptionCreateParam param) {
         Company company = companyRepository.findById(param.companyId())
                 .orElseThrow(() -> new CompanyNotFoundException(param.companyId()));
         JobDescription jd = new JobDescription(param, company);
-        return repository.save(jd);
+        return new JobDescriptionSimple(repository.save(jd));
     }
 
-    public JobDescription update(Long id, JobDescriptionUpdateParam param) {
+    public JobDescriptionSimple update(Long id, JobDescriptionUpdateParam param) {
         JobDescription jd = repository.findById(id)
                 .orElseThrow(() -> new JobDescriptionNotFoundException(id));
         jd.update(param);
         jd.getCompany();
-        return repository.save(jd);
+        return new JobDescriptionSimple(repository.save(jd));
     }
 
-    public boolean delete(Long id) {
+    public Long delete(Long id) {
         JobDescription jd = repository.findById(id)
                 .orElseThrow(() -> new JobDescriptionNotFoundException(id));
         jd.delete();
         repository.save(jd);
-        return true;
+        return id;
     }
 }

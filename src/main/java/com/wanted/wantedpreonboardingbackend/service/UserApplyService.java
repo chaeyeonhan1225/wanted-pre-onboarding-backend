@@ -9,6 +9,7 @@ import com.wanted.wantedpreonboardingbackend.domain.user.User;
 import com.wanted.wantedpreonboardingbackend.domain.user.UserApply;
 import com.wanted.wantedpreonboardingbackend.domain.user.UserRepository;
 import com.wanted.wantedpreonboardingbackend.domain.user.param.UserApplyParam;
+import com.wanted.wantedpreonboardingbackend.service.dto.UserApplySimple;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,13 +24,13 @@ public class UserApplyService {
         this.jobDescriptionRepository = jobDescriptionRepository;
     }
 
-    public UserApply apply(Long jobDescriptionId, UserApplyParam param) {
+    public UserApplySimple apply(Long jobDescriptionId, UserApplyParam param) {
         User user = userRepository.findById(param.userId())
                 .orElseThrow(() -> new UserNotFoundException(param.userId()));
         JobDescription jd = jobDescriptionRepository.findById(jobDescriptionId)
                 .orElseThrow(() -> new JobDescriptionNotFoundException(jobDescriptionId));
         userRepository.save(user);
-        return user.applyJob(jd);
+        return new UserApplySimple(user.applyJob(jd));
     }
 
 }

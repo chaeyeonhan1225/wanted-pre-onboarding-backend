@@ -38,10 +38,7 @@ class JobDescriptionServiceTest {
                 "Python",
                 1L);
 
-        JobDescription jobDescription = service.create(param);
-        assertThat(jobDescription.getStatus()).isEqualTo(CommonState.ACTIVE);
-        assertThat(jobDescription.getStatus().getValue()).isEqualTo(CommonState.ACTIVE.getValue());
-        assertThat(jobDescription.getStatus().getValue()).isEqualTo(1);
+        JobDescriptionSimple jobDescription = service.create(param);
         List<JobDescriptionSimple> results = provider.findAll(new JobDescriptionFilter(null));
         assertThat(results.size()).isEqualTo(1);
     }

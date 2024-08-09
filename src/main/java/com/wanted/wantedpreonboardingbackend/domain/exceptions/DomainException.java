@@ -1,7 +1,13 @@
 package com.wanted.wantedpreonboardingbackend.domain.exceptions;
 
+import lombok.Getter;
+
+@Getter
 public class DomainException extends RuntimeException {
-    public DomainException(String message) {
+    ExceptionCode code;
+
+    public DomainException(ExceptionCode code, String message) {
         super(message);
+        this.code = code;
     }
 }

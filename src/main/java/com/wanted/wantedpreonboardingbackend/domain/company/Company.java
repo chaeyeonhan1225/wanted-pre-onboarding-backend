@@ -3,15 +3,15 @@ package com.wanted.wantedpreonboardingbackend.domain.company;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wanted.wantedpreonboardingbackend.domain.common.CommonState;
 import com.wanted.wantedpreonboardingbackend.domain.common.EntityBase;
-import com.wanted.wantedpreonboardingbackend.domain.company.Location;
 import com.wanted.wantedpreonboardingbackend.infrastructure.CommonStateConverter;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLRestriction;
-import org.hibernate.annotations.Where;
 
-@Getter(AccessLevel.PUBLIC)
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="Company")
 @Entity
 @SQLRestriction("status > 0")
