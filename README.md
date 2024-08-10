@@ -59,3 +59,21 @@
     ```http request
    POST /jobdescriptions/{id}/apply
    ```
+## 초기 데이터
+초기 데이터가 세팅되어있습니다. 테스트를 위해 기본 설정으로 API를 실행하자마자 Table이 create-drop 되며, 초기 데이터가 생성됩니다.
+(기존 데이터를 유지하고 재시작하려면 설정 변경 필요 create-drop -> update, always -> never)
+```sql
+INSERT INTO Company (status, createdAt, updatedAt, version, country, name, region)
+VALUES (1, CURRENT_DATE, CURRENT_DATE, 1, 'Korea', 'Apple', 'Seoul'),
+       (1, CURRENT_DATE, CURRENT_DATE, 1, 'Korea', 'Meta', 'Seoul'),
+       (1, CURRENT_DATE, CURRENT_DATE, 1, 'Korea', 'Google', 'Seoul'),
+       (1, CURRENT_DATE, CURRENT_DATE, 1, 'Korea', 'MicroSoft', 'Seoul'),
+       (1, CURRENT_DATE, CURRENT_DATE, 1, 'Korea', 'Amazon', 'Seoul');
+
+INSERT INTO WantedWork.`User` (createdAt, updatedAt, version, nickname, email)
+VALUES (CURRENT_DATE, CURRENT_DATE, 1, 'tester1', 'test1@gmail.com'),
+       (CURRENT_DATE, CURRENT_DATE, 1, 'tester2', 'test2@gmail.com'),
+       (CURRENT_DATE, CURRENT_DATE, 1, 'tester3', 'test3@gmail.com'),
+       (CURRENT_DATE, CURRENT_DATE, 1, 'tester4', 'test4@gmail.com'),
+       (CURRENT_DATE, CURRENT_DATE, 1, 'tester5', 'test5@gmail.com');
+```
