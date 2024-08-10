@@ -10,6 +10,7 @@ import com.wanted.wantedpreonboardingbackend.service.dto.JobDescriptionDetail;
 import com.wanted.wantedpreonboardingbackend.service.dto.JobDescriptionSimple;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,8 @@ public class JobDescriptionProvider {
 
     public JobDescriptionDetail findById(Long id) {
         JobDescription jd = repository.findById(id).orElseThrow(() -> new JobDescriptionNotFoundException(id));
-        List<JobDescription> relatedJds = repository.findByCompanyId(jd.getCompany().getId());
-        return new JobDescriptionDetail(jd, relatedJds);
+        Page<JobDescription> relatedJds = repository.findByCompanyId(jd.getCompany().getId(),
+                PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "id")));
+        return new JobDescriptionDetail(jd, relatedJds.stream().toList());
     }
 }
