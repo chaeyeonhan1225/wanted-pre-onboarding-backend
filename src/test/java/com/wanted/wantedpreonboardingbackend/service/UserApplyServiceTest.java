@@ -48,7 +48,7 @@ class UserApplyServiceTest {
         jobDescriptionRepository.save(jd);
 
         // when
-        UserApplyParam userApplyParam = new UserApplyParam(jd.getId());
+        UserApplyParam userApplyParam = new UserApplyParam(1L);
         UserApplySimple applyResult = service.apply(jd.getId(), userApplyParam);
 
         // then
