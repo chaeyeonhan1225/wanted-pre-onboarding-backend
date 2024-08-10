@@ -5,8 +5,12 @@ import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescriptio
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescriptionFilter;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescriptionRepository;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescriptionSpec;
+import com.wanted.wantedpreonboardingbackend.service.dto.CommonPage;
 import com.wanted.wantedpreonboardingbackend.service.dto.JobDescriptionDetail;
 import com.wanted.wantedpreonboardingbackend.service.dto.JobDescriptionSimple;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,16 +27,19 @@ public class JobDescriptionProvider {
         this.repository = repository;
     }
 
-    public List<JobDescriptionSimple> findAll(JobDescriptionFilter filter) {
-        List<JobDescription> jds;
+    public CommonPage<JobDescriptionSimple> findAll(JobDescriptionFilter filter, int page, int size) {
+        Page<JobDescription> jds;
         if (filter.search() != null) {
             Specification<JobDescription> spec = new JobDescriptionSpec(filter).build();
-            jds = repository.findAll(spec);
+            jds = repository.findAll(spec, PageRequest.of(page - 1, size,
+                    Sort.by(Sort.Direction.DESC, "id")));
         } else {
-            jds = repository.findAll();
+            jds = repository.findAll(PageRequest.of(page - 1, size,
+                    Sort.by(Sort.Direction.DESC, "id")));
         }
-
-        return jds.stream().map(JobDescriptionSimple::new).toList();
+        return new CommonPage<>(jds.hasNext(), jds.hasPrevious(),
+                jds.getTotalPages(), jds.getNumberOfElements(),
+                page, jds.stream().map(JobDescriptionSimple::new).toList());
     }
 
     public JobDescriptionDetail findById(Long id) {

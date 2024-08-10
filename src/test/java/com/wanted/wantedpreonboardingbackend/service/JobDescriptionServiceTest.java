@@ -6,6 +6,7 @@ import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescriptio
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescriptionFilter;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescriptionRepository;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.param.JobDescriptionUpdateParam;
+import com.wanted.wantedpreonboardingbackend.service.dto.CommonPage;
 import com.wanted.wantedpreonboardingbackend.service.dto.JobDescriptionSimple;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.param.JobDescriptionCreateParam;
 import org.junit.jupiter.api.Assertions;
@@ -49,8 +50,8 @@ class JobDescriptionServiceTest {
                 1L);
 
         JobDescriptionSimple jobDescription = service.create(param);
-        List<JobDescriptionSimple> results = provider.findAll(new JobDescriptionFilter(null));
-        assertThat(results.size()).isEqualTo(1);
+        CommonPage<JobDescriptionSimple> results = provider.findAll(new JobDescriptionFilter(null), 1, 100);
+        assertThat(results.totalSize()).isEqualTo(1);
     }
 
     @Test

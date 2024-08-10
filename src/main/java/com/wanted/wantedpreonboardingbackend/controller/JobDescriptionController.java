@@ -1,6 +1,7 @@
 package com.wanted.wantedpreonboardingbackend.controller;
 
 import com.wanted.wantedpreonboardingbackend.controller.responses.CommonResponse;
+import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescription;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.JobDescriptionFilter;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.param.JobDescriptionCreateParam;
 import com.wanted.wantedpreonboardingbackend.domain.jobdescription.param.JobDescriptionUpdateParam;
@@ -8,9 +9,11 @@ import com.wanted.wantedpreonboardingbackend.domain.user.param.UserApplyParam;
 import com.wanted.wantedpreonboardingbackend.service.JobDescriptionProvider;
 import com.wanted.wantedpreonboardingbackend.service.JobDescriptionService;
 import com.wanted.wantedpreonboardingbackend.service.UserApplyService;
+import com.wanted.wantedpreonboardingbackend.service.dto.CommonPage;
 import com.wanted.wantedpreonboardingbackend.service.dto.JobDescriptionSimple;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,8 +37,10 @@ public class JobDescriptionController {
 
     @Operation(summary = "Job Description 조회", description = "채용공고 조회")
     @GetMapping
-    public ResponseEntity findAll(@RequestParam(required = false) String search) {
-        List<JobDescriptionSimple> results = provider.findAll(new JobDescriptionFilter(search));
+    public ResponseEntity findAll(@RequestParam(required = false) String search,
+                                  @RequestParam(required = false, defaultValue = "1") int page,
+                                  @RequestParam(required = false, defaultValue = "10") int size) {
+        CommonPage<JobDescriptionSimple> results = provider.findAll(new JobDescriptionFilter(search), page, size);
         return ResponseEntity.ok(CommonResponse.of(results));
     }
 
@@ -60,9 +65,9 @@ public class JobDescriptionController {
     @Operation(summary = "Job Description 삭제", description = "채용공고 삭제")
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
-         Long deletedJdId = service.delete(id);
-         return ResponseEntity.ok(CommonResponse.of(true,
-                 "채용공고(id=" + deletedJdId + ")가 삭제 되었습니다."));
+        Long deletedJdId = service.delete(id);
+        return ResponseEntity.ok(CommonResponse.of(true,
+                "채용공고(id=" + deletedJdId + ")가 삭제 되었습니다."));
     }
 
     @Operation(summary = "Job Description 지원", description = "채용공고 지원")

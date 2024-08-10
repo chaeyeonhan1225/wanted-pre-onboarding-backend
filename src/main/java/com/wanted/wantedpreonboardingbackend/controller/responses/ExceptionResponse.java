@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.StreamSupport;
 
 @Getter
@@ -35,23 +36,26 @@ public class ExceptionResponse {
     // FieldError는 따로 처리
     public static List<ExceptionResponse> ofList(InvalidInputException exception) {
         System.out.println("exception = " + exception.getFieldErrors());
-        return Collections.singletonList(new ExceptionResponse(exception.getCode().getCode(),
-                exception.getMessage()));
+        Map<String, String> fieldErrors = exception.getFieldErrors();
+        String code = exception.getCode().getValue();
+        return fieldErrors.entrySet().stream().map(
+                e -> new ExceptionResponse(code, e.getValue(), e.getKey())
+        ).toList();
     }
 
 
     public static List<ExceptionResponse> ofList(DomainException exception) {
-        return Collections.singletonList(new ExceptionResponse(exception.getCode().getCode(), exception.getMessage()));
+        return Collections.singletonList(new ExceptionResponse(exception.getCode().getValue(), exception.getMessage()));
     }
 
 
     public static List<ExceptionResponse> ofList(RuntimeException exception) {
-        return Collections.singletonList(new ExceptionResponse(ExceptionCode.INTERNAL_SERVER_ERROR.getCode(),
+        return Collections.singletonList(new ExceptionResponse(ExceptionCode.INTERNAL_SERVER_ERROR.getValue(),
                 exception.getMessage()));
     }
 
     public static List<ExceptionResponse> ofList(Exception exception) {
-        return Collections.singletonList(new ExceptionResponse(ExceptionCode.INTERNAL_SERVER_ERROR.getCode(),
+        return Collections.singletonList(new ExceptionResponse(ExceptionCode.INTERNAL_SERVER_ERROR.getValue(),
                 "Internal Server Error"));
     }
 }

@@ -1,7 +1,7 @@
 package com.wanted.wantedpreonboardingbackend.controller.responses;
 
 import com.wanted.wantedpreonboardingbackend.domain.exceptions.DomainException;
-import jakarta.validation.ConstraintViolationException;
+import com.wanted.wantedpreonboardingbackend.domain.exceptions.InvalidInputException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -29,5 +29,9 @@ public class CommonResponse<T>  {
 
     public static <T> CommonResponse<T> error(DomainException exception) {
         return new CommonResponse(null, null, ExceptionResponse.ofList(exception));
+    }
+
+    public static <T> CommonResponse<T> error(InvalidInputException exception) {
+        return new CommonResponse(null, exception.getMessage(), ExceptionResponse.ofList(exception));
     }
 }
